@@ -18,6 +18,7 @@ public class TranslatorShould
         rb.gravityScale = 0;
         trans = go.AddComponent<Translator>();
         oldPos = go.transform.position;
+        trans.speed = 2f;
     }
 
     [UnityTest]
@@ -37,7 +38,22 @@ public class TranslatorShould
     [UnityTest]
     public IEnumerator Move_NonZeroMovementVector_TheGameObjectMovesAsExpected()
     {
+        /// Arrange
+        /// Preguntar:
+        /// Al comenzar a escribir los test
+        /// el expected siempre fue una constante, esto no tenia en cuenta
+        /// que al prender el juego en Awake seteariamos una posicion aleatoria
+        /// por lo tanto el expected tendria que ser la posicion actual luego 
+        /// setear la posicion aleatoria, mas el incremento a testear
+        /// En que parte del ciclo de la creacion de Tests debia tenerse en cuenta
+        /// el desplazamiento en unidades ?
+        /// o se deberia haber creado un nuevo test ?
+        /// que deberia pasar con este Test que consideraba el desplazamiento solo
+        /// en una unidad basada en el World Space ?
+        /// La misma pregunta aplica a la variacion cuando se le aplica una velocidad
+        /// que multiplica el movimiento
         yield return null;
+        var expected = oldPos.x + Vector2.right.x * trans.speed;
 
         /// Act
         trans.Move(Vector2.right);
@@ -45,14 +61,28 @@ public class TranslatorShould
         yield return new WaitForSeconds(1f);
 
         /// Assert
-        Assert.AreEqual(oldPos.y, go.transform.position.y);
-        Assert.IsTrue(Mathf.Approximately(1f, go.transform.position.x), "transform.position.x is not 1f as expected");
+        Assert.IsTrue(Mathf.Approximately(expected, go.transform.position.x), $"transform.position.x is not {expected} as expected, instead was {go.transform.position.x}");
     }
 
     [UnityTest]
     public IEnumerator Move_DiagonalMovementVector_TheGameObjectMoveAsExpected()
     {
+        /// Arrange
+        /// /// Preguntar:
+        /// Al comenzar a escribir los test
+        /// el expected siempre fue una constante, esto no tenia en cuenta
+        /// que al prender el juego en Awake seteariamos una posicion aleatoria
+        /// por lo tanto el expected tendria que ser la posicion actual luego 
+        /// setear la posicion aleatoria, mas el incremento a testear
+        /// En que parte del ciclo de la creacion de Tests debia tenerse en cuenta
+        /// el desplazamiento en unidades ?
+        /// o se deberia haber creado un nuevo test ?
+        /// que deberia pasar con este Test que consideraba el desplazamiento solo
+        /// en una unidad basada en el World Space ?
+        /// La misma pregunta aplica a la variacion cuando se le aplica una velocidad
+        /// que multiplica el movimiento
         yield return null;
+        var expected = new Vector2(1f * trans.speed + oldPos.x, 1f * trans.speed + oldPos.y);
 
         /// Act
         trans.Move(new Vector2(1f, 1f));
@@ -60,8 +90,8 @@ public class TranslatorShould
         yield return new WaitForSeconds(1f);
 
         /// Assert
-        bool result = Mathf.Approximately(1f, go.transform.position.y) && Mathf.Approximately(1f, go.transform.position.x) ? true : false;
-        Assert.IsTrue(result, $"transform.position is not 1f, 1f as expected, instead was {go.transform.position.x} {go.transform.position.y}");
+        Assert.IsTrue(Mathf.Approximately(expected.x, go.transform.position.x), $"transform.position X is not {expected.x} as expected, instead was {go.transform.position.x}");
+        Assert.IsTrue(Mathf.Approximately(expected.y, go.transform.position.y), $"transform.position Y is not {expected.y} as expected, instead was {go.transform.position.y}");
     }
 
     #region This Tests Validates that after N Seconds the velocity does not change

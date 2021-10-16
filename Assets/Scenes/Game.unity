@@ -158,7 +158,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3755125619778632308, guid: 8a3b057f7fe975c4dbfecf03c0fc49e2, type: 3}
   m_PrefabInstance: {fileID: 3755125621048859208}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1414160448
+--- !u!114 &1414160445
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,11 +167,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1414160444}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1846c062f4d899e48b4a4878108b9d68, type: 3}
+  m_Script: {fileID: 11500000, guid: 087c01b3f62d69d49a7bce32b410868b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  maxSpeed: 3
 --- !u!50 &1414160449
 Rigidbody2D:
   serializedVersion: 4
